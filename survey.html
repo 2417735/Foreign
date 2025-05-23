@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Consultation Survey - FOREIGN</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .survey-wrapper {
+            max-width: 500px;
+            margin: 120px auto 40px auto;
+            background: #fffbe7;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(205,92,92,0.07);
+            padding: 2.5rem 1.5rem 2rem 1.5rem;
+        }
+        .survey-title {
+            color: #CD5C5C;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .survey-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .survey-form label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        .survey-form input, .survey-form select, .survey-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            transition: border-color 0.3s;
+        }
+        .survey-form input:focus, .survey-form select:focus, .survey-form textarea:focus {
+            border-color: #CD5C5C;
+            outline: none;
+        }
+        .survey-btn {
+            background: #CD5C5C;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.85rem 2.2rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(205,92,92,0.08);
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 0.5rem;
+        }
+        .survey-btn:hover {
+            background: #b34b4b;
+            transform: translateY(-2px) scale(1.03);
+        }
+        .survey-progress {
+            text-align: center;
+            color: #999;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+        }
+        .thank-you {
+            text-align: center;
+            color: #CD5C5C;
+            font-size: 1.3rem;
+            margin-top: 2rem;
+        }
+        .survey-header {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(205,92,92,0.08);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+        .survey-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+        }
+        .survey-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #CD5C5C;
+            letter-spacing: 1px;
+        }
+        .survey-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .survey-nav a {
+            color: #CD5C5C;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        .survey-nav a:hover {
+            color: #b34b4b;
+        }
+        .survey-footer {
+            background: #f8f8f8;
+            border-top: 1px solid #eee;
+            padding: 1.2rem 0;
+            text-align: center;
+            color: #666;
+            font-size: 1rem;
+            margin-top: 2.5rem;
+        }
+        .survey-footer a {
+            color: #CD5C5C;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .survey-footer a:hover {
+            color: #b34b4b;
+        }
+        @media (max-width: 600px) {
+            .survey-header-content {
+                flex-direction: column;
+                gap: 0.7rem;
+                padding: 0 0.5rem;
+            }
+            .survey-wrapper {
+                margin: 90px 0.5rem 30px 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="survey-header">
+        <div class="survey-header-content">
+            <div class="survey-logo"><a href="index.html" style="color: #CD5C5C; text-decoration: none;">FOREIGN</a></div>
+            <nav class="survey-nav">
+                <a href="index.html">Home</a>
+                <a href="mailto:info@store.com">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+    <div class="survey-wrapper">
+        <div id="surveyStep1">
+            <div class="survey-title">Skin Consultation Survey</div>
+            <div class="survey-subtitle">Let's get to know you!</div>
+            <form id="formStep1" class="survey-form">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit" class="survey-btn">Next</button>
+            </form>
+        </div>
+        <div id="surveyStep2" style="display:none;">
+            <div class="survey-progress">Step 2 of 4</div>
+            <form id="formStep2" class="survey-form">
+                <label>1. What is your skin type?</label>
+                <select name="skinType" required>
+                    <option value="">Select...</option>
+                    <option>Dry</option>
+                    <option>Oily</option>
+                    <option>Combination</option>
+                    <option>Sensitive</option>
+                    <option>Normal</option>
+                </select>
+                <label>2. Do you have any specific skin concerns or problems?</label>
+                <input type="text" name="concerns" required placeholder="e.g. acne, pigmentation, wrinkles">
+                <label>3. What is your current skincare routine?</label>
+                <textarea name="routine" rows="2" required placeholder="Cleanser, toner, moisturizer, etc."></textarea>
+                <label>4. How often do you exfoliate or use active ingredients?</label>
+                <input type="text" name="exfoliate" required placeholder="e.g. 2x/week, rarely, etc.">
+                <label>5. Do you use sunscreen daily?</label>
+                <select name="sunscreen" required>
+                    <option value="">Select...</option>
+                    <option>Yes, always</option>
+                    <option>Sometimes</option>
+                    <option>No</option>
+                </select>
+                <button type="submit" class="survey-btn">Next</button>
+            </form>
+        </div>
+        <div id="surveyStep3" style="display:none;">
+            <div class="survey-progress">Step 3 of 4</div>
+            <form id="formStep3" class="survey-form">
+                <label>6. How much water do you drink daily?</label>
+                <input type="text" name="water" required placeholder="e.g. 2 liters, 5 glasses, etc.">
+                <label>7. What is your diet like?</label>
+                <input type="text" name="diet" required placeholder="e.g. balanced, high sugar, etc.">
+                <label>8. Are you under stress or experiencing hormonal changes?</label>
+                <input type="text" name="stress" required placeholder="e.g. yes, no, sometimes">
+                <label>9. Are you taking any medications or supplements?</label>
+                <input type="text" name="medications" required placeholder="e.g. no, vitamin D, etc.">
+                <label>10. Do you have a history of skin allergies, eczema, or other skin conditions?</label>
+                <input type="text" name="history" required placeholder="e.g. no, eczema, etc.">
+                <button type="submit" class="survey-btn">Next</button>
+            </form>
+        </div>
+        <div id="surveyStep4" style="display:none;">
+            <div class="survey-progress">Step 4 of 4</div>
+            <form id="formStep4" class="survey-form">
+                <label>11. How often do you wear makeup, and how do you remove it?</label>
+                <input type="text" name="makeup" required placeholder="e.g. daily, rarely, etc.">
+                <label>12. Do you smoke, drink alcohol, or sleep irregularly?</label>
+                <input type="text" name="lifestyle" required placeholder="e.g. no, sometimes, etc.">
+                <label>13. Have you done any skin treatments recently?</label>
+                <input type="text" name="treatments" required placeholder="e.g. facial, laser, none">
+                <label>14. Do you touch or pick your face often?</label>
+                <input type="text" name="touch" required placeholder="e.g. yes, no, sometimes">
+                <label>15. What is your sleep pattern like?</label>
+                <input type="text" name="sleep" required placeholder="e.g. 8 hours, irregular, etc.">
+                <button type="submit" class="survey-btn">Finish</button>
+            </form>
+        </div>
+        <div id="surveyThankYou" style="display:none;">
+            <div class="thank-you">Thank you for completing the survey!<br>Our doctor will contact you soon by email.</div>
+        </div>
+    </div>
+    <footer class="survey-footer">
+        <a href="index.html">Home</a>|
+        <a href="mailto:info@store.com">Contact Us</a>
+    </footer>
+    <script>
+        // Multi-step survey logic
+        const step1 = document.getElementById('surveyStep1');
+        const step2 = document.getElementById('surveyStep2');
+        const step3 = document.getElementById('surveyStep3');
+        const step4 = document.getElementById('surveyStep4');
+        const thankYou = document.getElementById('surveyThankYou');
+
+        document.getElementById('formStep1').onsubmit = function(e) {
+            e.preventDefault();
+            if (this.name.value && this.email.value) {
+                step1.style.display = 'none';
+                step2.style.display = 'block';
+            }
+        };
+        document.getElementById('formStep2').onsubmit = function(e) {
+            e.preventDefault();
+            step2.style.display = 'none';
+            step3.style.display = 'block';
+        };
+        document.getElementById('formStep3').onsubmit = function(e) {
+            e.preventDefault();
+            step3.style.display = 'none';
+            step4.style.display = 'block';
+        };
+        document.getElementById('formStep4').onsubmit = function(e) {
+            e.preventDefault();
+            step4.style.display = 'none';
+            thankYou.style.display = 'block';
+        };
+    </script>
+</body>
+</html> 
