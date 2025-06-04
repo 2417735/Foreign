@@ -1,392 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foreign</title>
-    <style>
-        /* Universal Box-Sizing and Font */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-
-        /* Header Styles */
-        .header {
-            background-color: #fff;
-            padding: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            display: flex; /* Added for layout of search and nav */
-            justify-content: space-between; /* Added for layout of search and nav */
-            align-items: center; /* Added for layout of search and nav */
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            margin-left: 1rem; /* Adjust as needed */
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            margin-right: 1rem; /* Adjust as needed */
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-
-        /* Search Section Styles */
-        .search-section {
-            padding: 1rem;
-            text-align: center;
-        }
-
-        #searchInput {
-            padding: 0.7rem;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        .search-button {
-            padding: 0.7rem 1.5rem;
-            border: none;
-            background-color: black;
-            color: white;
-            border-radius: 8px;
-            margin-left: 0.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero Section Styles */
-        .hero {
-            margin-top: 80px; /* To account for fixed header */
-            background-color: #f8f8f8;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .hero p {
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .cta-button {
-            background-color: #333;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        /* Products Section Styles */
-        .products {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .products h3 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .product-price {
-            color: #666;
-            font-weight: bold;
-            margin-bottom: 1rem; /* Added margin for button */
-            display: block; /* Ensures it takes its own line */
-        }
-
-        .product-card button {
-            background-color: #007bff;
-            color: white;
-            padding: 0.7rem 1.2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .product-card button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Footer Styles */
-        .footer {
-            background-color: #333;
-            color: white;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: #ddd;
-        }
-    </style>
+    <title>Skin Consultation Survey - FOREIGN</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="survey-page">
     <header class="header">
-        <div class="search-section">
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search with AI..."
-            />
-            <button
-                onclick="searchProduct()"
-                class="search-button"
-            >
-                Search
-            </button>
-        </div>
-
         <div class="logo">FOREIGN</div>
-        <nav class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#products">Products</a>
-            <a href="#contact">Contact</a>
-            <a href="#login.html">Sign In</a>
-            <a href="#signup.html">Sign Up</a>
+        <nav class="main-nav">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#products">Products</a>
+                <a href="cart.html">Cart</a>
+                <a href="survey.html">Survey</a>
+                <a href="#contact">Contact</a>
+                <a href="login.html">Sign In</a>
+                <a href="signup.html">Sign Up</a>
+            </div>
+            <button class="menu-button" aria-label="Toggle navigation">&#9776;</button>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Discover Your Perfect Skincare</h1>
-        <p>Natural ingredients for radiant, healthy skin</p>
-        <p>From South Korea</p>
-        <a href="#contact" class="cta-button">Shop Now</a>
-    </section>
+    <div class="survey-wrapper glow">
+        <div class="survey-title">Skin Consultation</div>
+        <div class="survey-subtitle">Help us understand your skin better to recommend the perfect products!</div>
 
-    <section class="products" id="products">
-        <h3>Featured Products</h3>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="syrum.jpg" alt="Hydrating Serum" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Hydrating Serum</h3>
-                    <p class="product-price">$29.99</p>
-                    <button class="add-to-cart-btn" data-product-id="1" data-product-name="Hydrating Serum" data-product-price="29.99">
-                        Add to Cart
-                    </button>
+        <div id="surveyStep1" class="survey-step active">
+            <form id="formStep1" class="survey-form">
+                <div class="form-group">
+                    <label for="surveyName">Your Name:</label>
+                    <input type="text" id="surveyName" name="name" required>
                 </div>
-            </div>
-            <div class="product-card">
-                <img src="The.jpg" alt="Moisturizing Cream" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Moisturizing Cream</h3>
-                    <p class="product-price">$24.99</p>
-                    <button class="add-to-cart-btn" data-product-id="2" data-product-name="Moisturizing Cream" data-product-price="24.99">
-                        Add to Cart
-                    </button>
+                <div class="form-group">
+                    <label for="surveyEmail">Your Email:</label>
+                    <input type="email" id="surveyEmail" name="email" required>
                 </div>
-            </div>
-            <div class="product-card">
-                <img src="kk.jpg" alt="Cleansing Gel" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Cleansing Gel</h3>
-                    <p class="product-price">$19.99</p>
-                    <button class="add-to-cart-btn" data-product-id="3" data-product-name="Cleansing Gel" data-product-price="19.99">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-            <div class="product-card">
-                <img src="vitac.jpg" alt="Eye Cream" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-title">Eye Cream</h3>
-                    <p class="product-price">$34.99</p>
-                    <button class="add-to-cart-btn" data-product-id="4" data-product-name="Eye Cream" data-product-price="34.99">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
+                <button type="submit" class="survey-nav-btn">Next</button>
+            </form>
         </div>
-    </section>
 
-    <section class="products" id="results" style="display: none;">
-        <h3>AI Search Results</h3>
-        <div class="product-grid">
-            </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>About Us</h3>
-                <ul>
-                    <li><a href="#story">Our Story</a></li>
-                    <li><a href="#mission">Mission</a></li>
-                    <li><a href="#values">Values</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Customer Service</h3>
-                <ul>
-                    <li><a href="#contact">Contact Us</a></li>
-                    <li><a href="#shipping">Shipping</a></li>
-                    <li><a href="#returns">Returns</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Follow Us</h3>
-                <ul>
-                    <li><a href="#instagram">Instagram</a></li>
-                    <li><a href="#facebook">Facebook</a></li>
-                    <li><a href="#twitter">Twitter</a></li>
-                </ul>
-            </div>
+        <div id="surveyStep2" class="survey-step">
+            <form id="formStep2" class="survey-form">
+                <div class="form-group">
+                    <label>What is your skin type?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="skinType" value="Normal" required> Normal</label>
+                        <label><input type="radio" name="skinType" value="Dry"> Dry</label>
+                        <label><input type="radio" name="skinType" value="Oily"> Oily</label>
+                        <label><input type="radio" name="skinType" value="Combination"> Combination</label>
+                        <label><input type="radio" name="skinType" value="Sensitive"> Sensitive</label>
+                    </div>
+                </div>
+                <button type="submit" class="survey-nav-btn">Next</button>
+            </form>
         </div>
+
+        <div id="surveyStep3" class="survey-step">
+            <form id="formStep3" class="survey-form">
+                <div class="form-group">
+                    <label>What are your primary skin concerns? (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="skinConcern" value="Acne"> Acne</label>
+                        <label><input type="checkbox" name="skinConcern" value="Dryness"> Dryness</label>
+                        <label><input type="checkbox" name="skinConcern" value="Oiliness"> Oiliness</label>
+                        <label><input type="checkbox" name="skinConcern" value="Sensitivity"> Sensitivity</label>
+                        <label><input type="checkbox" name="skinConcern" value="Redness"> Redness</label>
+                        <label><input type="checkbox" name="skinConcern" value="Aging"> Aging Signs (Wrinkles/Fine Lines)</label>
+                        <label><input type="checkbox" name="skinConcern" value="Hyperpigmentation"> Hyperpigmentation (Dark Spots)</label>
+                        <label><input type="checkbox" name="skinConcern" value="Dullness"> Dullness/Lack of Radiance</label>
+                    </div>
+                </div>
+                <button type="submit" class="survey-nav-btn">Next</button>
+            </form>
+        </div>
+
+        <div id="surveyStep4" class="survey-step">
+            <form id="formStep4" class="survey-form">
+                <div class="form-group">
+                    <label for="currentRoutine">Briefly describe your current skincare routine:</label>
+                    <textarea id="currentRoutine" name="currentRoutine" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="skinGoals">What are your main skin goals?</label>
+                    <textarea id="skinGoals" name="skinGoals" rows="4"></textarea>
+                </div>
+                <button type="submit" class="survey-nav-btn">Submit Survey</button>
+            </form>
+        </div>
+
+        <div id="surveyThankYou" class="survey-step">
+            <div class="thank-you-message">Thank you for completing the survey!<br>Our doctor will contact you soon by email.</div>
+        </div>
+    </div>
+
+    <footer class="survey-footer">
+        <a href="index.html">Home</a>|
+        <a href="mailto:info@foreign.com">Contact Us</a>
     </footer>
 
-    <script>
-        // Example for searchProduct function (you'll need to implement actual AI search logic)
-        function searchProduct() {
-            const searchInput = document.getElementById('searchInput').value;
-            const resultsSection = document.getElementById('results');
-            const resultsGrid = resultsSection.querySelector('.product-grid');
-
-            // Clear previous results
-            resultsGrid.innerHTML = '';
-
-            // This is where you would integrate with an actual AI search API.
-            // For demonstration, let's simulate some results based on the input.
-            const allProducts = [
-                { id: 1, name: 'Hydrating Serum', price: '29.99', image: 'syrum.jpg' },
-                { id: 2, name: 'Moisturizing Cream', price: '24.99', image: 'The.jpg' },
-                { id: 3, name: 'Cleansing Gel', price: '19.99', image: 'kk.jpg' },
-                { id: 4, name: 'Eye Cream', price: '34.99', image: 'vitac.jpg' },
-            ];
-
-            const filteredProducts = allProducts.filter(product =>
-                product.name.toLowerCase().includes(searchInput.toLowerCase())
-            );
-
-            if (filteredProducts.length > 0) {
-                filteredProducts.forEach(product => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-                    productCard.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}" class="product-image">
-                        <div class="product-info">
-                            <h3 class="product-title">${product.name}</h3>
-                            <p class="product-price">$${product.price}</p>
-                            <button class="add-to-cart-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}">
-                                Add to Cart
-                            </button>
-                        </div>
-                    `;
-                    resultsGrid.appendChild(productCard);
-                });
-                resultsSection.style.display = 'block'; // Show the results section
-            } else {
-                resultsGrid.innerHTML = '<p>No products found for your search.</p>';
-                resultsSection.style.display = 'block';
-            }
-        }
-
-        // Example for Add to Cart functionality (you'll need a full shopping cart system)
-        document.addEventListener('DOMContentLoaded', () => {
-            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const productId = event.target.dataset.productId;
-                    const productName = event.target.dataset.productName;
-                    const productPrice = event.target.dataset.productPrice;
-
-                    // In a real application, you would add this to a cart array,
-                    // update local storage, send to a server, etc.
-                    alert(`Added ${productName} to cart! Price: $${productPrice}`);
-                });
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
