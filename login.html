@@ -4,47 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - FOREIGN</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Add Google Sign-In API -->
+    <link rel="stylesheet" href="style.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
-<body style="background: #f8f8f8; min-height: 100vh;">
-    <div class="auth-container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
-        <div class="auth-form" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(205,92,92,0.10); padding: 2.5rem 2rem 2rem 2rem; max-width: 400px; width: 100%;">
-            <div style="text-align: center; margin-bottom: 1.2rem;">
-                <a href="index.html" style="font-weight: bold; font-size: 1.5rem; letter-spacing: 2px; color: #CD5C5C; text-decoration: none;">FOREIGN</a>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-form">
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <a href="index.html" style="font-weight: bold; font-size: 1.8rem; letter-spacing: 2px; color: #CD5C5C; text-decoration: none;">FOREIGN</a>
                 <div style="font-size: 1rem; color: #666; margin-top: 0.2em;">All your products from South Korea</div>
             </div>
-            <h2 style="text-align:center; color:#CD5C5C; margin-bottom:0.5rem;">Welcome Back</h2>
-            <p class="auth-subtitle" style="text-align:center; color:#666; margin-bottom:1.5rem;">Sign in to your account</p>
-            <div class="social-login">
-                <button class="social-btn google-btn" id="googleSignIn">
-                    <img src="https://www.google.com/favicon.ico" alt="Google">
-                    Continue with Google
-                </button>
-                <button class="social-btn apple-btn" id="appleSignIn">
-                    <img src="https://www.apple.com/favicon.ico" alt="Apple">
-                    Continue with Apple
-                </button>
-            </div>
+
+            <button class="social-btn google-btn" id="googleSignIn">
+                <img src="https://www.google.com/favicon.ico" alt="Google">
+                Continue with Google
+            </button>
+            <button class="social-btn apple-btn" id="appleSignIn">
+                <img src="https://www.apple.com/favicon.ico" alt="Apple">
+                Continue with Apple
+            </button>
+
             <div class="divider">
                 <span>or</span>
             </div>
+
             <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required style="font-size:1.1rem; padding:1rem;">
-                </div> 
+                    <input type="email" id="email" name="email" required>
+                </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required style="font-size:1.1rem; padding:1rem;">
+                    <input type="password" id="password" name="password" required>
                     <a href="#" class="forgot-password">Forgot Password?</a>
                 </div>
-                <button type="submit" class="submit-btn glow-subscribe-btn" style="width:100%; margin-top:0.5rem;">Sign In</button>
+                <button type="submit" class="submit-btn glow-subscribe-btn">Sign In</button>
             </form>
-            <p class="auth-link-text" style="text-align:center; margin-top:1.5rem;">Don't have an account? <a href="signup.html" style="color:#CD5C5C; font-weight:600;">Sign up</a></p>
+
+            <p class="auth-link-text">Don't have an account? <a href="signup.html">Sign up</a></p>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
