@@ -153,6 +153,25 @@
 <body>
     <header class="header">
         <nav class="nav">
+            <section style="padding: 2rem; text-align: center;">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search for a product..."
+    style="padding: 0.7rem; width: 300px; border: 1px solid #ccc; border-radius: 8px;"
+  />
+  <button
+    onclick="searchProduct()"
+    style="padding: 0.7rem 1.5rem; border: none; background-color: black; color: white; border-radius: 8px; margin-left: 0.5rem;"
+  >
+    Search
+  </button>
+</section>
+
+<section class="product-grid" id="results">
+  <!-- AI search results will be injected here -->
+</section>
+
             <div class="logo">FOREIGN</div>
             <div class="nav-links">
                 <a href="#home">Home</a>
@@ -171,9 +190,7 @@
         <a href="#contact" class="cta-button">Shop Now</a>
     </section>
     
-<title>AI Product Search</title>
-</head>
-<body>
+
   <h1>AI Product Search</h1>
   <input type="text" id="searchInput" placeholder="Search for a product...">
   <button onclick="searchProduct()">Search</button>
@@ -198,11 +215,7 @@
           list.appendChild(li);
         });
       });
-    }
-  </script>
-</body>
-</html>
-
+ 
     
     <section class="products" id="products">
         <h3>Featured Products</h3>
