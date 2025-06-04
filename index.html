@@ -171,12 +171,38 @@
         <a href="#contact" class="cta-button">Shop Now</a>
     </section>
     
- <section class="hero">
-        <h2>Our Story</h2>
-        <p></p>
-        <p></p> 
-        <a href="#products" class="cta-button">View</a>
-    </section>
+<title>AI Product Search</title>
+</head>
+<body>
+  <h1>AI Product Search</h1>
+  <input type="text" id="searchInput" placeholder="Search for a product...">
+  <button onclick="searchProduct()">Search</button>
+
+  <ul id="results"></ul>
+
+  <script>
+    function searchProduct() {
+      const query = document.getElementById('searchInput').value;
+      fetch('http://127.0.0.1:5000/search', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ query: query })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('results');
+        list.innerHTML = '';
+        data.forEach(product => {
+          const li = document.createElement('li');
+          li.textContent = `${product.name}: ${product.description}`;
+          list.appendChild(li);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
+
     
     <section class="products" id="products">
         <h3>Featured Products</h3>
