@@ -188,36 +188,8 @@
         <p>Natural ingredients for radiant, healthy skin</p>
         <p>From South Korea</p> 
         <a href="#contact" class="cta-button">Shop Now</a>
-    </section>
-    
-
-  <h1>AI Product Search</h1>
-  <input type="text" id="searchInput" placeholder="Search for a product...">
-  <button onclick="searchProduct()">Search</button>
-
-  <ul id="results"></ul>
-
-  <script>
-    function searchProduct() {
-      const query = document.getElementById('searchInput').value;
-      fetch('http://127.0.0.1:5000/search', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ query: query })
-      })
-      .then(response => response.json())
-      .then(data => {
-        const list = document.getElementById('results');
-        list.innerHTML = '';
-        data.forEach(product => {
-          const li = document.createElement('li');
-          li.textContent = `${product.name}: ${product.description}`;
-          list.appendChild(li);
-        });
-      });
  
-    
-    <section class="products" id="products">
+        <section class="products" id="products">
         <h3>Featured Products</h3>
         <div class="product-grid">
             <div class="product-card">
