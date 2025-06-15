@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 // Make sure these imports match the SDKs you included in your HTML files (e.g., firebase-app-compat.js, firebase-auth-compat.js, etc.)
 import { initializeApp } from "firebase/app";
+``html
+<script src="script.js" type="module"></script>
 // You will need to import other services as you use them, e.g.:
 // import { getAuth } from "firebase/auth";
 // import { getFirestore } from "firebase/firestore";
