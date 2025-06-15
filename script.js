@@ -1,3 +1,30 @@
+// Import the functions you need from the SDKs you need
+// Make sure these imports match the SDKs you included in your HTML files (e.g., firebase-app-compat.js, firebase-auth-compat.js, etc.)
+import { initializeApp } from "firebase/app";
+// You will need to import other services as you use them, e.g.:
+// import { getAuth } from "firebase/auth";
+// import { getFirestore } from "firebase/firestore";
+
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBU4c8ZwP_Z1X97mMhcLKsynm5jMwio2yA",
+    authDomain: "sample-firebase-ai-app-9f65a.firebaseapp.com",
+    projectId: "sample-firebase-ai-app-9f65a",
+    storageBucket: "sample-firebase-ai-app-9f65a.firebasestorage.app",
+    messagingSenderId: "828986099352",
+    appId: "1:828986099352:web:15385ff19df3f3aaf532ed"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// You can now access Firebase services like this:
+// const auth = getAuth(app);
+// const db = getFirestore(app);
+// console.log("Firebase app initialized!", app);
+
+
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -130,7 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`${productName} added to cart!`);
+            // Replace alert with a custom modal or message box for better UX
+            // alert(`${productName} added to cart!`); 
+            console.log(`${productName} added to cart!`); // For now, log to console
             // You might want to update a cart icon counter here
         }
     });
@@ -224,10 +253,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const promoCode = localStorage.getItem('appliedPromoCode');
             if (promoCode === 'SAVE10') { // Example promo code
                 total *= 0.90; // 10% discount
-                promoFeedback.textContent = '10% discount applied!';
-                promoFeedback.style.color = '#174A2B';
+                if (promoFeedback) { // Check if promoFeedback element exists
+                    promoFeedback.textContent = '10% discount applied!';
+                    promoFeedback.style.color = '#174A2B';
+                }
             } else {
-                 promoFeedback.textContent = ''; // Clear feedback if no valid promo applied
+                if (promoFeedback) { // Check if promoFeedback element exists
+                    promoFeedback.textContent = ''; // Clear feedback if no valid promo applied
+                }
             }
 
             if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
@@ -247,245 +280,117 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.setItem('appliedPromoCode', code);
                     updateOrderSummary();
                 } else if (code === '') {
-                     promoFeedback.textContent = 'Please enter a promo code.';
-                     promoFeedback.style.color = '#CD5C5C';
-                     localStorage.removeItem('appliedPromoCode'); // Clear any invalid code
+                    if (promoFeedback) {
+                        promoFeedback.textContent = 'Please enter a promo code.';
+                        promoFeedback.style.color = '#CD5C5C';
+                    }
+                    localStorage.removeItem('appliedPromoCode'); // Clear applied promo if input is empty
+                    updateOrderSummary();
                 } else {
-                    promoFeedback.textContent = 'Invalid promo code.';
-                    promoFeedback.style.color = '#CD5C5C';
-                    localStorage.removeItem('appliedPromoCode'); // Clear any invalid code
+                    if (promoFeedback) {
+                        promoFeedback.textContent = 'Invalid promo code.';
+                        promoFeedback.style.color = '#CD5C5C';
+                    }
+                    localStorage.removeItem('appliedPromoCode');
+                    updateOrderSummary();
                 }
             });
         }
 
-        // Checkout button
+        // --- Checkout Logic ---
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
             checkoutBtn.addEventListener('click', () => {
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                if (cart.length === 0) {
+                if (cart.length > 0) {
+                    const orderDate = new Date().toISOString().split('T')[0]; //YYYY-MM-DD
+                    const orderTotal = parseFloat(document.getElementById('total').textContent.replace('$', ''));
+
+                    // Store current cart as a previous order
+                    let previousOrders = JSON.parse(localStorage.getItem('previousOrders')) || [];
+                    previousOrders.push({
+                        date: orderDate,
+                        items: cart,
+                        total: orderTotal
+                    });
+                    localStorage.setItem('previousOrders', JSON.stringify(previousOrders));
+
+                    localStorage.removeItem('cart'); // Clear the cart after checkout
+                    localStorage.removeItem('appliedPromoCode'); // Clear any applied promo code
+                    alert('Order placed successfully! Thank you for your purchase.');
+                    window.location.href = 'index.html'; // Redirect to home or a thank you page
+                } else {
                     alert('Your cart is empty. Please add items before checking out.');
-                    return;
                 }
-
-                // Simulate order completion
-                const orderDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                let previousOrders = JSON.parse(localStorage.getItem('previousOrders')) || [];
-                previousOrders.unshift({ date: orderDate, items: cart, total: document.getElementById('total').textContent }); // Add current cart as a new order
-
-                localStorage.setItem('previousOrders', JSON.stringify(previousOrders));
-                localStorage.removeItem('cart'); // Clear the current cart
-                localStorage.removeItem('appliedPromoCode'); // Clear applied promo code
-
-                alert('Order placed successfully! Redirecting to homepage.');
-                window.location.href = 'index.html'; // Redirect to homepage or confirmation page
             });
         }
 
-        // Previous Orders logic
         function renderPreviousOrders() {
-            const orders = JSON.parse(localStorage.getItem('previousOrders') || '[]');
-            const container = document.getElementById('previousOrders');
-            if (!container) return; // Exit if not on cart page
+            const previousOrdersContainer = document.getElementById('previousOrders');
+            let previousOrders = JSON.parse(localStorage.getItem('previousOrders')) || [];
 
-            if (!orders.length) {
-                container.innerHTML = '<div style="color:#bbb;text-align:center;font-size:1.05rem; padding:1.5rem;">No previous orders yet.</div>';
+            if (!previousOrdersContainer) return; // Exit if not on cart page or element not found
+
+            if (previousOrders.length === 0) {
+                previousOrdersContainer.innerHTML = '<p class="empty-orders-message">No previous orders found.</p>';
                 return;
             }
-            container.innerHTML = orders.map(order => `
-                <div style="background:#F9F6F2;border-radius:10px;padding:1.2rem 1.2rem 1rem 1.2rem;margin-bottom:1.2rem;box-shadow:0 2px 8px rgba(23,74,43,0.06);">
-                    <div style="color:#174A2B;font-weight:600;font-size:1.08rem;margin-bottom:0.3rem;">Order Date: ${order.date}</div>
-                    <ul style="margin:0 0 0.5rem 1.2rem;padding:0;color:#222;font-size:1rem;">
-                        ${order.items.map(item => `<li>${item.name} x ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}</li>`).join('')}
+
+            previousOrdersContainer.innerHTML = previousOrders.map(order => `
+                <div class="previous-order-card">
+                    <h4>Order Date: ${order.date}</h4>
+                    <p>Total: $${order.total.toFixed(2)}</p>
+                    <ul class="order-items-list">
+                        ${order.items.map(item => `
+                            <li>${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}</li>
+                        `).join('')}
                     </ul>
-                    <div style="color:#222;font-weight:600;font-size:1.1rem;text-align:right;">Total: ${order.total}</div>
                 </div>
             `).join('');
         }
     }
 
 
-    // --- Login/Signup Page Specific Logic (assuming login.html and signup.html use this script) ---
-    // Google Sign-In init (placeholder)
-    // This assumes you have a Google Client ID set up for your project
-    // google.accounts.id.initialize({
-    //     client_id: "YOUR_GOOGLE_CLIENT_ID", // Replace with your actual client ID
-    //     callback: handleCredentialResponse
-    // });
-    // google.accounts.id.renderButton(
-    //     document.getElementById("googleSignIn"), // Ensure this ID exists on your button
-    //     { theme: "outline", size: "large", text: "continue_with", width: "300" }  // customization attributes
-    // );
-    // function handleCredentialResponse(response) {
-    //     console.log("Encoded JWT ID token: " + response.credential);
-    //     // You would send this credential to your backend for verification
-    //     alert("Google Sign-In successful! Check console for token.");
-    //     // Redirect or update UI as needed
-    // }
+    // --- Carousel Logic (if you have product detail pages or similar)
+    const carousel = document.getElementById('productCarousel');
+    const dotsContainer = document.getElementById('carouselDots');
+    if (carousel && dotsContainer) {
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const nextBtn = document.getElementById('carouselNext'); // Ensure this ID exists on your button
+        const dots = dotsContainer.querySelectorAll('.carousel-dot');
+        let current = 0;
+        let timer = null;
 
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = loginForm.email.value;
-            const password = loginForm.password.value;
-
-            // Simple client-side validation/simulation
-            if (email === 'user@example.com' && password === 'password123') {
-                alert('Login successful!');
-                window.location.href = 'index.html'; // Redirect to home page
-            } else {
-                alert('Invalid email or password.');
-            }
-        });
-    }
-
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const fullname = signupForm.fullname.value;
-            const email = signupForm.email.value;
-            const password = signupForm.password.value;
-            const confirmPassword = signupForm['confirm-password'].value;
-
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-
-            // Simple client-side simulation
-            alert(`Account created for ${fullname} (${email})!`);
-            window.location.href = 'login.html'; // Redirect to login page after signup
-        });
-    }
-
-    // --- Survey Page Specific Logic (assuming survey.html uses this script) ---
-    // If the survey page is separate, its logic will be self-contained or use specific IDs
-    // The previous survey.html snippet had its JS inline, which is fine, but if you want it here:
-    if (document.body.classList.contains('survey-page')) {
-        const step1 = document.getElementById('surveyStep1');
-        const step2 = document.getElementById('surveyStep2');
-        const step3 = document.getElementById('surveyStep3');
-        const step4 = document.getElementById('surveyStep4');
-        const thankYou = document.getElementById('surveyThankYou');
-
-        // Initially show only the first step
-        if (step1) step1.style.display = 'block';
-        if (step2) step2.style.display = 'none';
-        if (step3) step3.style.display = 'none';
-        if (step4) step4.style.display = 'none';
-        if (thankYou) thankYou.style.display = 'none';
-
-
-        const formStep1 = document.getElementById('formStep1');
-        if(formStep1) {
-            formStep1.onsubmit = function(e) {
-                e.preventDefault();
-                if (this.name.value && this.email.value) {
-                    if (step1) step1.style.display = 'none';
-                    if (step2) step2.style.display = 'block';
-                } else {
-                    alert('Please fill in your name and email.');
-                }
-            };
-        }
-
-        const formStep2 = document.getElementById('formStep2');
-        if(formStep2) {
-            formStep2.onsubmit = function(e) {
-                e.preventDefault();
-                if (step2) step2.style.display = 'none';
-                if (step3) step3.style.display = 'block';
-            };
-        }
-
-        const formStep3 = document.getElementById('formStep3');
-        if(formStep3) {
-            formStep3.onsubmit = function(e) {
-                e.preventDefault();
-                if (step3) step3.style.display = 'none';
-                if (step4) step4.style.display = 'block';
-            };
-        }
-
-        const formStep4 = document.getElementById('formStep4');
-        if(formStep4) {
-            formStep4.onsubmit = function(e) {
-                e.preventDefault();
-                // In a real app, you'd send this data to a server
-                alert('Survey submitted!');
-                if (step4) step4.style.display = 'none';
-                if (thankYou) thankYou.style.display = 'block';
-
-                // Simulate saving survey data (e.g., to local storage or a backend)
-                const name = document.getElementById('surveyName').value;
-                const email = document.getElementById('surveyEmail').value;
-                const skinType = document.querySelector('input[name="skinType"]:checked')?.value || 'Not specified';
-                const concerns = Array.from(document.querySelectorAll('input[name="skinConcern"]:checked')).map(cb => cb.value);
-                const routine = document.getElementById('currentRoutine').value;
-                const goals = document.getElementById('skinGoals').value;
-
-                console.log({ name, email, skinType, concerns, routine, goals });
-                // If you had a real endpoint to send data:
-                // sendSurveyDataToServer({ name, email, skinType, concerns, routine, goals });
-            };
-        }
-
-        // Function to simulate sending data to a server (replace with actual API call)
-        function sendSurveyDataToServer(data) {
-            const endpoint = 'https://script.google.com/macros/s/AKfycbw6H3YIBl_vZ_6p02P5KKkXHq4ZKyuv_XyrXAa6L1cnxykIc/dev'; // Your provided endpoint
-            fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(data => console.log('Survey data sent:', data))
-            .catch(error => console.error('Error sending survey data:', error));
-        }
-
-        // Product Carousel Logic (from your original script, likely for product detail pages or similar)
-        const carousel = document.getElementById('productCarousel');
-        const dotsContainer = document.getElementById('carouselDots');
-        if (carousel && dotsContainer) {
-            const slides = carousel.querySelectorAll('.carousel-slide');
-            const nextBtn = document.getElementById('carouselNext'); // Ensure this ID exists on your button
-            const dots = dotsContainer.querySelectorAll('.carousel-dot');
-            let current = 0;
-            let timer = null;
-
-            function showSlide(idx) {
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === idx);
-                    dots[i].classList.toggle('active', i === idx);
-                });
-                current = idx;
-            }
-
-            function nextSlide() {
-                showSlide((current + 1) % slides.length);
-            }
-
-            if (nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    nextSlide();
-                    resetTimer();
-                });
-            }
-
-            dots.forEach((dot, i) => {
-                dot.addEventListener('click', () => {
-                    showSlide(i);
-                    resetTimer();
-                });
+        function showSlide(idx) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === idx);
+                dots[i].classList.toggle('active', i === idx);
             });
-
-            function resetTimer() {
-                if (timer) clearInterval(timer);
-                timer = setInterval(nextSlide, 5000);
-            }
-            resetTimer();
+            current = idx;
         }
+
+        function nextSlide() {
+            showSlide((current + 1) % slides.length);
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetTimer();
+            });
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showSlide(i);
+                resetTimer();
+            });
+        });
+
+        function resetTimer() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(nextSlide, 5000);
+        }
+        resetTimer();
     }
 });
